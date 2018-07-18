@@ -3,15 +3,26 @@ var request = require('request');
 var twitterRouter = express.Router();
 
 twitterRouter.get('/', function(req, res) {
-  
-  request('https://www.google.com', function (error, response, body) {
-    //console.log('error:', error); // Print the error if one occurred
+
+  var requestProperties = 
+  {
+    url: 'https://api.twitter.com/oauth2/token',
+    auth: 
+    {
+      username: '',
+      password: ''
+    },
+    form:
+    {
+      grant_type: 'client_credentials'
+    }
+  }
+
+  request.post(requestProperties, function (error, response, body) {
     var errorMsg = 'error:' + error;
-    var statusCodeMsg = 'statusCode:' + response && response.statusCode;
+    var statusCodeMsg = 'statusCode:' + response.statusCode;
     var bodyMsg = 'body:' + body;
     res.send(errorMsg + '|' + statusCodeMsg + "|" + bodyMsg);
-    //res.send('statusCode:' + response && response.statusCode); // Print the response status code if a response was received
-    //res.send('body:' + body); // Print the HTML for the Google homepage.
   });
 })
 
