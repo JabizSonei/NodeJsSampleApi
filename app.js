@@ -3,8 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//Added module to parse the body of the http request
+//Added module (bodyParser) to parse the body of the http request
 var bodyParser = require('body-parser');
+require('dotenv').config();
 
 var apiRouter = require('./routes/api');
 var twitterRouter = require('./routes/twitter');

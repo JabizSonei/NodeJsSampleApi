@@ -4,13 +4,13 @@ var twitterRouter = express.Router();
 
 twitterRouter.get('/', function(req, res) {
 
-  var requestProperties = 
+  const requestProperties = 
   {
     url: 'https://api.twitter.com/oauth2/token',
     auth: 
     {
-      username: '',
-      password: ''
+      username: process.env.TWITTER_USERNAME,
+      password: process.env.TWITTER_PASSWORD
     },
     form:
     {
@@ -19,10 +19,8 @@ twitterRouter.get('/', function(req, res) {
   }
 
   request.post(requestProperties, function (error, response, body) {
-    var errorMsg = 'error:' + error;
-    var statusCodeMsg = 'statusCode:' + response.statusCode;
-    var bodyMsg = 'body:' + body;
-    res.send(errorMsg + '|' + statusCodeMsg + "|" + bodyMsg);
+    const tokenResponse = JSON.parse(body);
+    res.send('Token extracted from JSON: ' + tokenResponse.access_token);
   });
 })
 
