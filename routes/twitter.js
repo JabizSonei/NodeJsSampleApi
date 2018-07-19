@@ -20,10 +20,19 @@ twitterRouter.get('/', function(req, res) {
 
   request.post(requestProperties, function (error, response, body) {
     const tokenResponse = JSON.parse(body);
-    res.send('Token extracted from JSON: ' + tokenResponse.access_token);
+
+    const nasaRequestProperties = 
+    {
+      url: 'https://api.twitter.com/1.1/search/tweets.json?q=nasa',
+      auth:
+      {
+        bearer: tokenResponse.access_token
+      }
+    }
+    request.get(nasaRequestProperties, function (error, response, body) {
+      res.send(body);
+    });    
   });
 })
 
-  module.exports = twitterRouter;
-
-  
+module.exports = twitterRouter;
